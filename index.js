@@ -7,7 +7,7 @@ const keys = obj => {
 }
 
 // default callback
-const cb = msg => message.error(msg)
+const cb = msg => console.log(msg)
 
 const defaultOptions = {
   through: true

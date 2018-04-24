@@ -51,7 +51,7 @@
 
   // default callback
   var cb = function cb(msg) {
-    return message.error(msg);
+    return console.log(msg);
   };
 
   var defaultOptions = {
@@ -99,7 +99,7 @@
             var isRequired = rule.isRequired,
                 fieldDesc = rule.fieldDesc,
                 re = rule.re,
-                _message = rule.message,
+                message = rule.message,
                 _rule$callback = rule.callback,
                 callback = _rule$callback === undefined ? cb : _rule$callback;
 
@@ -113,7 +113,7 @@
             }
 
             if (value && re && !re.test(value)) {
-              callback(_message);
+              callback(message);
               result = false;
               break;
             }
