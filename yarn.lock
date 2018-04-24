@@ -782,6 +782,10 @@ uglify-js@^3.3.22:
     commander "~2.15.0"
     source-map "~0.6.1"
 
+umd@^3.0.3:
+  version "3.0.3"
+  resolved "http://registry.npm.taobao.org/umd/download/umd-3.0.3.tgz#aa9fe653c42b9097678489c01000acb69f0b26cf"
+
 wrappy@1:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/wrappy/download/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
