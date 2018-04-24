@@ -6,11 +6,9 @@ const keys = obj => {
   return k
 }
 
-// default callback
-const cb = msg => console.log(msg)
-
 const defaultOptions = {
-  through: true
+  through: false,
+  callback: msg => console.error(msg)
 }
 
 class Validator {
@@ -42,9 +40,9 @@ class Validator {
         let rule = this.rules[j]
         if (field !== rule.field) continue
 
-        const { isRequired, fieldDesc, re, message, callback = cb} = rule
+        const { isRequired, fieldDesc, re, message, callback = this.options.callback } = rule
         const value = form[field]
-
+        
         // 检查必要字段
         if (isRequired && !value) {
           callback(`${fieldDesc}不能为空`)
@@ -67,5 +65,3 @@ class Validator {
     return this.validate(form)
   }
 }
-
-export default Validator
