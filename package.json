@@ -1,5 +1,5 @@
 {
-  "name": "tiny-validator",
+  "name": "tiny-form-validator",
   "version": "1.0.0",
   "description": " tiny validator for form",
   "main": "index.js",
