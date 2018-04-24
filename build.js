@@ -1,9 +1,7 @@
-const CODE_NAME = 'Validator'
 const {transformFileSync} = require('babel-core')
 const fs = require('fs')
 const path = require('path')
 const uglify = require('uglify-js')
-const umd = require('umd')
 const shell = require('shelljs')
 
 shell.rm('-rf', 'dist')
