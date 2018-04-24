@@ -1,0 +1,26 @@
+{
+  "name": "tiny-validator",
+  "version": "1.0.0",
+  "description": " tiny validator for form",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.qiyejia360.com:ruru.hu/validator.git"
+  },
+  "author": "ruru.hu",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.5",
+    "prop-types": "^15.6.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "uglify-js": "^3.3.22",
+    "umd": "^3.0.3"
+  }
+}
