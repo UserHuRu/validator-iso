@@ -1,17 +1,27 @@
-const _ = require('lodash')
-const PropTypes = require('prop-types')
+const keys = obj => {
+  const k = []
+  for (i in obj) {
+    k.push(i)
+  }
+  return k
+}
 
 // default callback
 const cb = msg => message.error(msg)
+
+const defaultOptions = {
+  through: true
+}
 
 class Validator {
   /**
    * 构造器
    * @param {array} rules 校验规则
+   * @param {array} options 选项
    */
-  constructor (rules = [], showAllErrors = false) {
+  constructor (rules = [], options) {
     this.rules = rules
-    this.showAllErrors = showAllErrors
+    this.options = Object.assign(defaultOptions, options)
   }
 
   /**
@@ -20,13 +30,13 @@ class Validator {
    */
   validate (form) {
     // console.log(form)
-
+    const through = this.options.through
     let result = true
-    const fields = _.keys(form)
+    const fields = keys(form)
 
     for (let i = 0; i < fields.length; i++) {
       const field = fields[i]
-      if (!this.showAllErrors && !result) break
+      if (!through && !result) break
 
       for (let j = 0; j < this.rules.length; j++) {
         let rule = this.rules[j]
@@ -47,11 +57,6 @@ class Validator {
           result = false
           break
         }
-
-        if (value && re && re.test(value)) {
-          callback('')
-          break
-        }
       }
     }
 
@@ -63,16 +68,4 @@ class Validator {
   }
 }
 
-Validator.propTypes = {
-  rules: PropTypes.arrayOf(PropTypes.shape({
-    field: PropTypes.string.isRequired,
-    re: PropTypes.object.isRequired,
-    message: PropTypes.string.isRequired,
-    callback: PropTypes.func,
-    isRequired: PropTypes.bool,
-    fieldDesc: PropTypes.string
-  }).isRequired).isRequired,
-  showAllErrors: PropTypes.bool
-}
-
-exports.Validator = Validator
+export default Validator

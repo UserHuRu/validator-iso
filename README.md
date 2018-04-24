@@ -1,59 +1,51 @@
-# tiny-form-validator
-> simple validator for the form
+# validator-iso
+> Universal (a.k.a isomorphic) validator
 
 ### Install
 
 ```bash
-$ npm i tiny-form-validator
+$ npm i validator-iso
 ```
 
 ### How to Use
 
-```
-validator = new Validator(rules, showAllErrors)
-
-validator.run(form)
-
-```
-
-## 配置参数 Options
-
-### rules { Array }
-
-验证规则配置
-
-```
-rules: [
+```js
+var rules = [
   {
     field: 'name', // 字段名
-    fieldDesc: '企业（团队）名称', // 字段名描述
-    re: /^.{2,20}$/, // 正则验证
-    message: '企业（团队）名称需要至少2个字符', // 错误提示
+    fieldDesc: '姓名', // 字段名描述
+    re: /^[\u4e00-\u9fa5]{2,10}$/, // 正则验证
+    message: '请填写中文名，长度为2~10个字符', // 错误提示
     isRequired: true, // 该字段是否必须验证
-    callback: errMsg => console.log(errMsg) // 验证错误的回调函数
-  }
+    callback: function (errMsg) { // 验证错误的回调函数
+      alert(errMsg)
+    }
+  },
+  {
+    field: 'mobile', // 字段名
+    fieldDesc: '手机号', // 字段名描述
+    re: /^1\d{10}$/, // 正则验证
+    message: '请填写正确的手机号', // 错误提示
+    isRequired: true, // 该字段是否必须验证
+    callback: function (errMsg) { // 验证错误的回调函数
+      alert(errMsg)
+    }
+  },
   ...
 ]
-```
 
-### showAllErrors { Boole }
+var form = {
+  name: '令狐冲',
+  mobile: '13851795179'
+}
 
-可选参数， 默认false。
+validator = new Validator(rules, showAllErrors)
 
-true: 一次验证完所有字段。
-
-false: 一个字段验证失败，则不再验证其他字段。
-
-
-### form { Object }
-```
-{
-  name: 'ruru.hu',
-  email: '215937284@qq.com'
+if (validator.run(form)) {
+  console.log('表单验证通过')
 }
 ```
 
-## API
+### API
 
-### run(form)
-
+TBD

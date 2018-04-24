@@ -1,20 +1,28 @@
-const CODE_NAME = 'TinyValidator'
-const {transform} = require('babel-core')
+const CODE_NAME = 'Validator'
+const {transformFileSync} = require('babel-core')
 const fs = require('fs')
 const path = require('path')
 const uglify = require('uglify-js')
 const umd = require('umd')
+const shell = require('shelljs')
 
-const code = fs.readFileSync(path.join(__dirname, './index.js'))
-const result = transform(code, {
-  sourceType: 'script',
-  presets: [
+shell.rm('-rf', 'dist')
+shell.mkdir('-p', 'dist')
+
+const result = transformFileSync(path.join(__dirname, './index.js'), {
+  "presets": [
     ["env", {
       "targets": {
-        "browsers": ["last 2 versions", "safari >= 7"]
-      }
+        "browsers": ["last 2 versions", "safari >= 7"],
+        "node": "8.9",
+        "uglify": true
+      },
+      "modules": "umd",
+      "include": ["es6.object.assign"],
+      "debug": true,
     }]
   ]
 })
 
-fs.writeFileSync(path.join(__dirname, './dist/index.min.js'), uglify.minify(umd(CODE_NAME, result.code + `\n\nreturn ${CODE_NAME}`)).code)
+fs.writeFileSync(path.join(__dirname, './dist/validator.js'), result.code)
+fs.writeFileSync(path.join(__dirname, './dist/validator.min.js'), uglify.minify(result.code).code)
