@@ -1,6 +1,6 @@
 {
   "name": "validator-iso",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Universal (a.k.a isomorphic) validator",
   "main": "dist/validator.min.js",
   "scripts": {

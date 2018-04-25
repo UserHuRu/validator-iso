@@ -19,11 +19,25 @@ var defaultOptions = {
 };
 
 var Validator = function () {
-  /**
-   * 构造器
-   * @param {array} rules 校验规则
-   * @param {array} options 选项
-   */
+  _createClass(Validator, null, [{
+    key: "mergeErrors",
+    value: function mergeErrors() {
+      var errors = {};
+
+      for (var _i = 0; _i < arguments.length; _i++) {
+        errors = Object.assign(errors, arguments[_i].errors() || {});
+      }
+      return errors;
+    }
+
+    /**
+     * 构造器
+     * @param {array} rules 校验规则
+     * @param {array} options 选项
+     */
+
+  }]);
+
   function Validator() {
     var rules = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var options = arguments[1];
@@ -32,6 +46,7 @@ var Validator = function () {
 
     this.rules = rules;
     this.options = Object.assign(defaultOptions, options);
+    this._errors = undefined;
   }
 
   /**
@@ -43,13 +58,15 @@ var Validator = function () {
   _createClass(Validator, [{
     key: "validate",
     value: function validate(form) {
+      if (this._errors === undefined) this._errors = {};
+
       // console.log(form)
       var through = this.options.through;
       var result = true;
       var fields = keys(form);
 
-      for (var _i = 0; _i < fields.length; _i++) {
-        var field = fields[_i];
+      for (var _i2 = 0; _i2 < fields.length; _i2++) {
+        var field = fields[_i2];
         if (!through && !result) break;
 
         for (var j = 0; j < this.rules.length; j++) {
@@ -68,12 +85,14 @@ var Validator = function () {
           // 检查必要字段
           if (isRequired && !value) {
             callback(fieldDesc + "\u4E0D\u80FD\u4E3A\u7A7A");
+            this._errors[field] = fieldDesc + "\u4E0D\u80FD\u4E3A\u7A7A";
             result = false;
             break;
           }
 
           if (value && re && !re.test(value)) {
             callback(message);
+            this._errors[field] = message;
             result = false;
             break;
           }
@@ -86,6 +105,11 @@ var Validator = function () {
     key: "run",
     value: function run(form) {
       return this.validate(form);
+    }
+  }, {
+    key: "errors",
+    value: function errors() {
+      return this._errors;
     }
   }]);
 

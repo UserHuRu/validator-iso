@@ -12,6 +12,15 @@ const defaultOptions = {
 }
 
 class Validator {
+  static mergeErrors () {
+    let errors = {}
+
+    for (let i = 0; i < arguments.length; i++) {
+      errors = Object.assign(errors, arguments[i].errors() || {})
+    }
+    return errors
+  }
+
   /**
    * 构造器
    * @param {array} rules 校验规则
@@ -20,6 +29,7 @@ class Validator {
   constructor (rules = [], options) {
     this.rules = rules
     this.options = Object.assign(defaultOptions, options)
+    this._errors = undefined
   }
 
   /**
@@ -27,6 +37,8 @@ class Validator {
    * @param {object} form 需要校验的表单
    */
   validate (form) {
+    if (this._errors === undefined) this._errors = {}
+
     // console.log(form)
     const through = this.options.through
     let result = true
@@ -46,12 +58,14 @@ class Validator {
         // 检查必要字段
         if (isRequired && !value) {
           callback(`${fieldDesc}不能为空`)
+          this._errors[field] = `${fieldDesc}不能为空`
           result = false
           break
         }
 
         if (value && re && !re.test(value)) {
           callback(message)
+          this._errors[field] = message
           result = false
           break
         }
@@ -63,5 +77,9 @@ class Validator {
 
   run (form) {
     return this.validate(form)
+  }
+
+  errors () {
+    return this._errors
   }
 }
