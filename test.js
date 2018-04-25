@@ -29,3 +29,14 @@ assert.ok(validator.run({name: '令狐冲', mobile: '13851795179'}), '测试填�
 assert.ok(!validator.run({name: '', mobile: '13851795179'}), '测试姓名为空情况')
 assert.ok(!validator.run({name: '哥', mobile: '13851795179'}), '测试姓名填写不正确情况')
 assert.ok(!validator.run({name: '令狐冲', mobile: '1380000111'}), '测试手机号填写不正确的情况')
+
+const validator2 = new Validator(rules, {
+  callback: msg => console.error(`校验不通过：${msg}`)
+})
+
+// 测试合并错误
+validator.run({name: '', mobile: '13851795179'})
+validator2.run({name: '令狐冲', mobile: ''})
+const errors = Validator.mergeErrors(validator, validator2)
+console.log(errors)
+assert.ok(errors.name && errors.mobile, '测试手机号填写不正确的情况')
