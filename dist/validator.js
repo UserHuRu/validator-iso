@@ -14,7 +14,7 @@ var keys = function keys(obj) {
 var defaultOptions = {
   through: false,
   callback: function callback(msg) {
-    return console.error(msg);
+    return console.log(msg);
   }
 };
 

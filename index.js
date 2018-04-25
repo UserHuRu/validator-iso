@@ -8,7 +8,7 @@ const keys = obj => {
 
 const defaultOptions = {
   through: false,
-  callback: msg => console.error(msg)
+  callback: msg => console.log(msg)
 }
 
 class Validator {
