@@ -20,7 +20,7 @@ var defaultOptions = {
 
 var Validator = function () {
   _createClass(Validator, null, [{
-    key: "mergeErrors",
+    key: 'mergeErrors',
     value: function mergeErrors() {
       var errors = {};
 
@@ -56,7 +56,7 @@ var Validator = function () {
 
 
   _createClass(Validator, [{
-    key: "validate",
+    key: 'validate',
     value: function validate(form) {
       if (this._errors === undefined) this._errors = {};
 
@@ -84,8 +84,8 @@ var Validator = function () {
 
           // 检查必要字段
           if (isRequired && !value) {
-            callback(fieldDesc + "\u4E0D\u80FD\u4E3A\u7A7A");
-            this._errors[field] = fieldDesc + "\u4E0D\u80FD\u4E3A\u7A7A";
+            callback(fieldDesc + '\u4E0D\u80FD\u4E3A\u7A7A');
+            this._errors[field] = fieldDesc + '\u4E0D\u80FD\u4E3A\u7A7A';
             result = false;
             break;
           }
@@ -97,18 +97,18 @@ var Validator = function () {
             break;
           }
         }
-        if (result === true) delete this._errors[field];
+        if (result === true) this._errors[field] = '';
       }
 
       return result;
     }
   }, {
-    key: "run",
+    key: 'run',
     value: function run(form) {
       return this.validate(form);
     }
   }, {
-    key: "errors",
+    key: 'errors',
     value: function errors() {
       return this._errors;
     }

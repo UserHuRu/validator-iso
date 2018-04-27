@@ -36,7 +36,7 @@ const validator2 = new Validator(rules, {
 
 // 测试合并错误
 validator.run({name: '', mobile: '13851795179'})
-validator2.run({name: '令狐冲', mobile: ''})
+validator2.run({mobile: ''})
 const errors = Validator.mergeErrors(validator, validator2)
 console.log(errors)
 assert.ok(errors.name && errors.mobile, '测试手机号填写不正确的情况')
