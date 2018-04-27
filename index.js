@@ -70,8 +70,7 @@ class Validator {
           break
         }
       }
-
-      if (result === true) this._errors[field] = ''
+      if (result === true) delete this._errors[field]   
     }
 
     return result
