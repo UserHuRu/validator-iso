@@ -52,9 +52,9 @@ class Validator {
         let rule = this.rules[j]
         if (field !== rule.field) continue
 
-        const { isRequired, fieldDesc, re, message, callback = this.options.callback } = rule
+        const { isRequired, fieldDesc, re, message =` ${fieldDesc}格式不正确`, callback = this.options.callback } = rule
         const value = form[field]
-        
+
         // 检查必要字段
         if (isRequired && !value) {
           callback(`${fieldDesc}不能为空`)

@@ -76,7 +76,8 @@ var Validator = function () {
           var isRequired = rule.isRequired,
               fieldDesc = rule.fieldDesc,
               re = rule.re,
-              message = rule.message,
+              _rule$message = rule.message,
+              message = _rule$message === undefined ? ' ' + fieldDesc + '\u683C\u5F0F\u4E0D\u6B63\u786E' : _rule$message,
               _rule$callback = rule.callback,
               callback = _rule$callback === undefined ? this.options.callback : _rule$callback;
 
