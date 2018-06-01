@@ -30,6 +30,7 @@ class Validator {
     this.rules = rules
     this.options = Object.assign(defaultOptions, options)
     this._errors = undefined
+    this._form = undefined
   }
 
   /**
@@ -37,7 +38,10 @@ class Validator {
    * @param {object} form 需要校验的表单
    */
   validate (form) {
-    if (this._errors === undefined) this._errors = {}
+    // 没有什么用，就是存一下，以便查询导致校验不通过的字段输入
+    this._form = form
+    // 清空已有的 errors
+    this._errors = {}
 
     // console.log(form)
     const through = this.options.through
@@ -70,7 +74,6 @@ class Validator {
           break
         }
       }
-      if (result === true) this._errors[field] = ''   
     }
 
     return result

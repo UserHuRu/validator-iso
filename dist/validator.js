@@ -20,7 +20,7 @@ var defaultOptions = {
 
 var Validator = function () {
   _createClass(Validator, null, [{
-    key: 'mergeErrors',
+    key: "mergeErrors",
     value: function mergeErrors() {
       var errors = {};
 
@@ -47,6 +47,7 @@ var Validator = function () {
     this.rules = rules;
     this.options = Object.assign(defaultOptions, options);
     this._errors = undefined;
+    this._form = undefined;
   }
 
   /**
@@ -56,9 +57,12 @@ var Validator = function () {
 
 
   _createClass(Validator, [{
-    key: 'validate',
+    key: "validate",
     value: function validate(form) {
-      if (this._errors === undefined) this._errors = {};
+      // 没有什么用，就是存一下，以便查询导致校验不通过的字段输入
+      this._form = form;
+      // 清空已有的 errors
+      this._errors = {};
 
       // console.log(form)
       var through = this.options.through;
@@ -77,7 +81,7 @@ var Validator = function () {
               fieldDesc = rule.fieldDesc,
               re = rule.re,
               _rule$message = rule.message,
-              message = _rule$message === undefined ? ' ' + fieldDesc + '\u683C\u5F0F\u4E0D\u6B63\u786E' : _rule$message,
+              message = _rule$message === undefined ? " " + fieldDesc + "\u683C\u5F0F\u4E0D\u6B63\u786E" : _rule$message,
               _rule$callback = rule.callback,
               callback = _rule$callback === undefined ? this.options.callback : _rule$callback;
 
@@ -85,8 +89,8 @@ var Validator = function () {
 
           // 检查必要字段
           if (isRequired && !value) {
-            callback(fieldDesc + '\u4E0D\u80FD\u4E3A\u7A7A');
-            this._errors[field] = fieldDesc + '\u4E0D\u80FD\u4E3A\u7A7A';
+            callback(fieldDesc + "\u4E0D\u80FD\u4E3A\u7A7A");
+            this._errors[field] = fieldDesc + "\u4E0D\u80FD\u4E3A\u7A7A";
             result = false;
             break;
           }
@@ -98,18 +102,17 @@ var Validator = function () {
             break;
           }
         }
-        if (result === true) this._errors[field] = '';
       }
 
       return result;
     }
   }, {
-    key: 'run',
+    key: "run",
     value: function run(form) {
       return this.validate(form);
     }
   }, {
-    key: 'errors',
+    key: "errors",
     value: function errors() {
       return this._errors;
     }
