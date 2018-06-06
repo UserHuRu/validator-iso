@@ -67,11 +67,21 @@ class Validator {
           break
         }
 
-        if (value && re && !re.test(value)) {
+        if (isRequired && value) { // 必填、有值
+          callback('')
+          this._errors[field] = ''
+        }
+
+        if (value && re && !re.test(value)) { // 有值 正则失败
           callback(message)
           this._errors[field] = message
           result = false
           break
+        }
+
+        if (value && re && re.test(value)) { // 有值 正则成功
+          callback('')
+          this._errors[field] = ''
         }
       }
     }
