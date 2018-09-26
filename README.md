@@ -1,34 +1,61 @@
 # validator-iso
 > Universal (a.k.a isomorphic) validator
 
-### Install
+##### Install
 
 ```bash
 $ npm i validator-iso
 ```
 
-### Browser
+##### Browser
 
 ```html
 <script type="text/javascript" src="validator.min.js" ></script>
 ```
 
-### Node.js
+##### Node.js
 
 ```js
 const Validator = require('validator-iso')
 ```
 
-### Basic Usage
+##### Basic Usage
 
 ```js
-const validation = new Validator(rules [, Options]);
+const validation = new Validator(rules: Array, [Options: Object]);
 ```
+##### 参数
+- rules 对象数组，描述校验规则
 
-__rules__  {Array} - Validation rules
+| 字段名 | 描述 | 类型 | 必选 | 默认值 |
+|-----|-----|-----|-----|-----|
+| field | 字段名 | String | 是 | 无 |
+| fieldDesc | 字段名的描述 | String | 是 | 无 |
+| re | 正则表达式 | String | 是 | 无 |
+| message | 错误提示 | String | 是 | 无 |
+| isRequired | 某字段是否必须验证 | Boolean | 否 | false |
+| callback | 某字段错误的回调 | Function | 否 | 无 |
 
-__Options__  {Object} - configs
+- Options
 
+| 字段名 | 描述 | 类型 | 必选 | 默认值 |
+|-----|-----|-----|-----|-----|
+| through | 标志是否检测全部字段 | Boolean | 否 | false |
+| callback | 校验任意字段失败时的回调函数。 注意：会被rules中定义的callback覆盖） | Function | 否 | 无 |
+
+##### API
+
+- run(form: Object) 执行form的校验。 
+  方法返回值：Boolean
+  true: form校验通过; false: form校验不通过
+
+- errors() 获取校验结果。 
+  方法返回值：Object
+
+- mergeErrors(validator1, validator2) 获取合并后的两个Validator实例对象的error信息。
+  方法返回值：Object
+
+##### rules、options 参数示例
 
 ```js
 var rules = [
@@ -49,7 +76,9 @@ var rules = [
     callback: handler // 该字段错误的回调
   }
 ]
+```
 
+```js
 var options = {
   through: true, // 是否检测全部字段， 默认：false
   callback: function (errMsg) { // 字段检测失败时的回调函数 （注意：会被rules中定义的callback覆盖）
@@ -59,15 +88,7 @@ var options = {
 
 ```
 
-### Methods
-
-__run(form)__  {Function} - 执行form的校验  返回true: form校验通过、false: form校验不通过
-
-__errors()__  {Function} - 返回校验的结果：errors对象
-
-__mergeErrors(validator1, validator2)__ {Function} - 返回合并后的两个Validator实例对象的errors。如果有需要的话~
-
-### Example1
+##### Example1
 
 ```js
 function handler (errMsg) {
@@ -105,7 +126,7 @@ if (validator.run(form)) {
 }
 ```
 
-### Example2
+##### Example2
 
 ```js
 let options = {
@@ -151,7 +172,7 @@ let errors = validator.errors()
 console.log(errors) // { mobile: '手机号不能为空', email: '邮箱不能为空' } (注： 若through:false, errors={ mobile: '手机号不能为空' })
 ```
 
-### Example3
+##### Example3
 ```js
 var rules1 = [
   {
